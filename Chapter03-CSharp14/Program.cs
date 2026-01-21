@@ -1,51 +1,56 @@
-﻿// Chapter 03: C# 14 - Modern Features Demo
-// This demonstrates key C# 14 features covered in the book
+﻿using System;
+using System.Threading.Tasks;
 
-using System;
+namespace Chapter03;
 
-Console.WriteLine("=== C# 14 Feature Demonstrations ===\n");
-
-// 1. Primary Constructors (C# 12+)
-var person = new Person("Alice", 30);
-person.Introduce();
-
-// 2. Collection Expressions (C# 12+)
-int[] numbers = [1, 2, 3, 4, 5];
-List<string> names = ["Alice", "Bob", "Charlie"];
-Console.WriteLine($"Numbers: {string.Join(", ", numbers)}");
-
-// 3. Pattern Matching
-var result = CheckValue(42);
-Console.WriteLine($"Value check: {result}");
-
-// 4. Records for DTOs
-var product = new Product("Laptop", 999.99m, "Electronics");
-Console.WriteLine($"Product: {product}");
-
-// 5. Nullable Reference Types
-string? nullableText = null;
-Console.WriteLine($"Length: {nullableText?.Length ?? 0}");
-
-Console.WriteLine("\n=== Demo Complete ===");
-
-// Helper Methods
-static string CheckValue(object value) => value switch
+class Program
 {
-    int n when n > 0 => "Positive number",
-    int n when n < 0 => "Negative number",
-    string s => $"Text: {s}",
-    _ => "Unknown type"
-};
+    static async Task Main(string[] args)
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("=== C# 14 Chapter 3 Examples ===");
+            Console.WriteLine("1. Basics (Variables, Types)");
+            Console.WriteLine("2. Control Flow (Switch, Loops)");
+            Console.WriteLine("3. Methods (Params, Local functions)");
+            Console.WriteLine("4. OOP (Records, Primary Constructors)");
+            Console.WriteLine("5. Collections (Expressions, Spread)");
+            Console.WriteLine("6. LINQ (Queries, Lambdas)");
+            Console.WriteLine("7. Async (Await, WhenAll)");
+            Console.WriteLine("8. Safety (Nulls, Exceptions)");
+            Console.WriteLine("9. Challenge: Calculator");
+            Console.WriteLine("0. Exit");
+            Console.Write("\nSelect an option: ");
 
-// Classes with Primary Constructor
-class Person(string name, int age)
-{
-    public string Name { get; } = name;
-    public int Age { get; } = age;
+            string choice = Console.ReadLine();
 
-    public void Introduce() => 
-        Console.WriteLine($"Hi, I'm {Name} and I'm {Age} years old.");
+            if (choice == "0") break;
+
+            Console.WriteLine();
+            try
+            {
+                switch (choice)
+                {
+                    case "1": Basics.Variables.Run(); break;
+                    case "2": ControlFlow.Logic.Run(); break;
+                    case "3": Methods.Functions.Run(); break;
+                    case "4": OOP.Demo.Run(); break;
+                    case "5": Collections.Demo.Run(); break;
+                    case "6": LINQ.Queries.Run(); break;
+                    case "7": await Async.AsyncDemo.Run(); break;
+                    case "8": Safety.NullsAndExceptions.Run(); break;
+                    case "9": Challenges.Calculator.Run(); break;
+                    default: Console.WriteLine("Invalid option. Press Enter..."); break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\nError running example: {ex.Message}");
+            }
+
+            Console.WriteLine("\nPress Enter to return to menu...");
+            Console.ReadLine();
+        }
+    }
 }
-
-// Record for immutable data
-record Product(string Name, decimal Price, string Category);
